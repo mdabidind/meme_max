@@ -1,0 +1,42 @@
+name: PDF to Word Converter
+
+# Trigger when new PDFs are pushed to input/
+on:
+  push:
+    paths:
+      - "input/**.pdf"
+
+jobs:
+  convert:
+    runs-on: ubuntu-latest
+
+    steps:
+      # 1. Checkout repo
+      - name: Checkout repo
+        uses: actions/checkout@v3
+
+      # 2. Set up Python
+      - name: Setup Python 3.10
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.10"
+
+      # 3. Install dependencies
+      - name: Install Python dependencies
+        run: pip install -r requirements.txt
+
+      # 4. Prepare folders
+      - name: Prepare folders
+        run: |
+          mkdir -p input output
+
+      # 5. Run conversion
+      - name: Run PDF to DOCX conversion
+        run: python convert.py
+
+      # 6. Upload DOCX artifacts
+      - name: Upload converted DOCX files
+        uses: actions/upload-artifact@v3
+        with:
+          name: converted-docx
+          path: output/*.docx
