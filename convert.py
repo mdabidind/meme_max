@@ -10,12 +10,12 @@ OUTPUT_DIR = "output"
 os.makedirs(INPUT_DIR, exist_ok=True)
 os.makedirs(OUTPUT_DIR, exist_ok=True)
 
-# Get all PDFs
+# Get all PDFs in input folder
 pdf_files = [f for f in os.listdir(INPUT_DIR) if f.lower().endswith(".pdf")]
 
 if not pdf_files:
     print("⚠️ No PDFs found in input/. Nothing to convert.")
-    exit(0)  # Prevent exit code 2
+    exit(0)  # prevents exit code 2
 
 for filename in pdf_files:
     pdf_path = os.path.join(INPUT_DIR, filename)
